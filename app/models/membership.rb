@@ -9,8 +9,6 @@
 #  user_id    :integer
 #
 class Membership < ApplicationRecord
-  
   belongs_to :user, required: true, class_name: "User", foreign_key: "user_id"
   belongs_to :group, required: true, class_name: "Group", foreign_key: "group_id"
-
 end
