@@ -1,4 +1,7 @@
 # rails-8-template
+bundle install
+rails generate devise:install
+
 rails generate devise user preferred_language_id:integer image:string messages_count:integer
 
 has_many  :memberships, class_name: "Membership", foreign_key: "user_id", dependent: :destroy
