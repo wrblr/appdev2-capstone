@@ -29,5 +29,6 @@ class User < ApplicationRecord
   has_many  :messages, class_name: "Message", foreign_key: "sender_id", dependent: :nullify
 
   belongs_to :preferred_language, required: true, class_name: "Language", foreign_key: "preferred_language_id"
-  
+
+  has_many :groups, through: :memberships, source: :group
 end
