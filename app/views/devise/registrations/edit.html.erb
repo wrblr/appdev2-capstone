@@ -36,8 +36,8 @@
 
 <h2 class="mb-5 text-center fw-bold" style="font-family: 'Cinzel Decorative', serif;">Edit Profile</h2>
 
-<%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, multipart: true }) do |f| %>
-
+<%= simple_form_for(resource, as: resource_name, url: user_registration_path, html: { method: :put, multipart: true }) do |f| %>
+  
   <div class="form-inputs mb-3 fw-bold" style="font-family: 'Cinzel Decorative', serif;">
     <div class="mb-3">
       <%= f.label :email, class: "form-label" %>
