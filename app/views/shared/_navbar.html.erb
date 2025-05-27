@@ -1,7 +1,7 @@
 <!--<nav class="navbar navbar-expand-lg bg-body-tertiary">
   <div class="container-fluid">
     <a class="navbar-brand" href="#">Warble</a>-->
-    <%#= link_to "Warble", root_path, class: "navbar-brand" %>
+<%#= link_to "Warble", root_path, class: "navbar-brand" %>
 <!--    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -41,133 +41,20 @@
     <div class="row w-100">
       <div class="col-lg-10 offset-lg-1 d-flex justify-content-between align-items-center">
         <!-- Brand -->
-        <a class="navbar-brand d-flex align-items-center" href="/chats">
+        <a class="navbar-brand d-flex align-items-center" href="/">
           <span class="fs-4 fw-bold" style="font-family: 'Cinzel Decorative', serif;">WARBLE</span>
         </a>
 
         <!-- Middle section with language selector -->
         <div class="d-flex flex-grow-1 mx-4">
-          <form id="navbar_language_form" class="w-100" action="/users/337" accept-charset="UTF-8" method="post"><input type="hidden" name="_method" value="patch" autocomplete="off"><input type="hidden" name="authenticity_token" value="-GjCfSJ5KUlCOEO1BkR1bKt4wbfElBLh7J7ZPzKE1ZvQvCoErc5XakvXqJ8YFNilPZ8HHpTf7HBPe7FNN2rddQ" autocomplete="off">
-            <label class="visually-hidden" for="navbar_preferred_language">Select language</label>
-            <select class="form-select w-100" onchange="this.form.submit()" id="navbar_preferred_language" name="user[preferred_language_id">
-              <option value="1">Afrikaans</option>
-              <option value="2">Shqip (Albanian)</option>
-              <option value="3">አማርኛ (Amharic)</option>
-              <option value="4">العربية (Arabic)</option>
-              <option value="5">Հայերեն (Armenian)</option>
-              <option value="6">অসমীয়া (Assamese)</option>
-              <option value="7">अवधी (Awadhi)</option>
-              <option value="8">Azərbaycanca (Azerbaijani)</option>
-              <option value="9">Башҡортса (Bashkir)</option>
-              <option value="10">Euskara (Basque)</option>
-              <option value="11">Беларуская (Belarusian)</option>
-              <option value="12">বাংলা (Bengali)</option>
-              <option value="13">भोजपुरी (Bhojpuri)</option>
-              <option value="14">Bosanski (Bosnian)</option>
-              <option value="15">български (Bulgarian)</option>
-              <option value="16">မြန်မာဘာသာ (Burmese)</option>
-              <option value="17">廣東話 (Cantonese)</option>
-              <option value="18">Català (Catalan)</option>
-              <option value="19">ᏣᎳᎩ (Cherokee)</option>
-              <option value="20">छत्तीसगढ़ी (Chhattisgarhi)</option>
-              <option value="21">中文 (Chinese)</option>
-              <option value="22">普通话 (Chinese (Simplified))</option>
-              <option value="23">Hrvatski (Croatian)</option>
-              <option value="24">Čeština (Czech)</option>
-              <option value="25">Dansk (Danish)</option>
-              <option value="26">डोगरी (Dogri)</option>
-              <option value="27">Nederlands (Dutch)</option>
-              <option selected="selected" value="28">English</option>
-              <option value="29">эрзянь кель (Erzya)</option>
-              <option value="30">Esperanto</option>
-              <option value="31">Eesti (Estonian)</option>
-              <option value="32">Føroyskt (Faroese)</option>
-              <option value="33">Filipino</option>
-              <option value="34">Suomi (Finnish)</option>
-              <option value="35">Français (French)</option>
-              <option value="36">Fulfulde (Fula)</option>
-              <option value="37">Galego (Galician)</option>
-              <option value="38">ქართული (Georgian)</option>
-              <option value="39">Deutsch (German)</option>
-              <option value="40">Ελληνικά (Greek)</option>
-              <option value="41">ગુજરાતી (Gujarati)</option>
-              <option value="42">Kreyòl ayisyen (Haitian Creole)</option>
-              <option value="43">हरियाणवी (Haryanvi)</option>
-              <option value="44">Hausa</option>
-              <option value="45">עברית (Hebrew)</option>
-              <option value="46">हिन्दी (Hindi)</option>
-              <option value="47">Magyar (Hungarian)</option>
-              <option value="48">Íslenska (Icelandic)</option>
-              <option value="49">Igbo</option>
-              <option value="50">Bahasa Indonesia (Indonesian)</option>
-              <option value="51">ᐃᓄᒃᑎᑐᑦ (Inuktitut)</option>
-              <option value="52">Gaeilge (Irish)</option>
-              <option value="53">Italiano (Italian)</option>
-              <option value="54">日本語 (Japanese)</option>
-              <option value="55">Basa Jawa (Javanese)</option>
-              <option value="56">ಕನ್ನಡ (Kannada)</option>
-              <option value="57">کشمیری (Kashmiri)</option>
-              <option value="58">Қазақ тілі (Kazakh)</option>
-              <option value="59">ខ្មែរ (Khmer)</option>
-              <option value="60">कोंकणी (Konkani)</option>
-              <option value="61">한국어 (Korean)</option>
-              <option value="62">Кыргызча (Kyrgyz)</option>
-              <option value="63">ລາວ (Lao)</option>
-              <option value="64">Latviešu (Latvian)</option>
-              <option value="65">Lietuvių (Lithuanian)</option>
-              <option value="66">Lëtzebuergesch (Luxembourgish)</option>
-              <option value="67">македонски (Macedonian)</option>
-              <option value="68">मैथिली (Maithili)</option>
-              <option value="72">Malagasy</option>
-              <option value="69">Bahasa Melayu (Malay)</option>
-              <option value="70">മലയാളം (Malayalam)</option>
-              <option value="71">Malti (Maltese)</option>
-              <option value="73">मराठी (Marathi)</option>
-              <option value="74">मारवाड़ी (Marwari)</option>
-              <option value="75">閩南語 (Min Nan)</option>
-              <option value="76">Moldovenească (Moldovan)</option>
-              <option value="77">Монгол (Mongolian)</option>
-              <option value="78">Crnogorski (Montenegrin)</option>
-              <option value="79">नेपाली (Nepali)</option>
-              <option value="80">Norsk (Norwegian)</option>
-              <option value="81">Norsk bokmål (Norwegian (Bokmål))</option>
-              <option value="82">ଓଡ଼ିଆ (Oriya)</option>
-              <option value="83">پښتو (Pashto)</option>
-              <option value="84">فارسی (Persian)</option>
-              <option value="85">Polski (Polish)</option>
-              <option value="86">Português (Portuguese)</option>
-              <option value="87">ਪੰਜਾਬੀ (Punjabi)</option>
-              <option value="88">राजस्थानी (Rajasthani)</option>
-              <option value="89">Română (Romanian)</option>
-              <option value="90">Русский (Russian)</option>
-              <option value="91">संस्कृतम् (Sanskrit)</option>
-              <option value="92">ᱥᱟᱱᱛᱟᱲᱤ (Santali)</option>
-              <option value="93">Српски (Serbian)</option>
-              <option value="94">سنڌي (Sindhi)</option>
-              <option value="95">සිංහල (Sinhala)</option>
-              <option value="96">Slovenčina (Slovak)</option>
-              <option value="97">Slovenščina (Slovenian)</option>
-              <option value="98">Soomaali (Somali)</option>
-              <option value="99">Español (Spanish)</option>
-              <option value="100">Kiswahili (Swahili)</option>
-              <option value="101">Svenska (Swedish)</option>
-              <option value="102">Tagalog</option>
-              <option value="103">தமிழ் (Tamil)</option>
-              <option value="104">తెలుగు (Telugu)</option>
-              <option value="105">ไทย (Thai)</option>
-              <option value="106">ትግርኛ (Tigrinya)</option>
-              <option value="107">Türkçe (Turkish)</option>
-              <option value="108">Українська (Ukrainian)</option>
-              <option value="109">اردو (Urdu)</option>
-              <option value="110">Oʻzbekcha (Uzbek)</option>
-              <option value="111">Tiếng Việt (Vietnamese)</option>
-              <option value="112">Cymraeg (Welsh)</option>
-              <option value="113">吴语 (Wu)</option>
-              <option value="114">isiXhosa (Xhosa)</option>
-              <option value="115">Yorùbá (Yoruba)</option>
-              <option value="116">isiZulu (Zulu)</option>
-            </select>
-          </form>
+          <%= form_with url: user_registration_path, method: :patch, local: true, id: "navbar_language_form", class: "w-100" do |f| %>
+            <%= f.label :preferred_language_id, "Select language", class: "visually-hidden" %>
+            <%= f.select :preferred_language_id, 
+              Language.all.map { |lang| [lang.name, lang.id] }, 
+                { selected: current_user.preferred_language_id },
+                { class: "form-select w-100", id: "navbar_preferred_language", onchange: "this.form.submit()" } %>
+          <% end %>
+
         </div>
 
         <!-- Profile link (icon only on mobile, icon+text on larger screens) -->
