@@ -26,8 +26,19 @@
 
   <body>
     <%= render partial: "shared/navbar" %>
-    
+
     <div class="container">
+      <% flash.each do |type, message| %>
+        <% css_class = case type.to_sym
+          when :notice then "success"
+          when :alert then "danger"
+          when :error then "danger"
+          else "info"
+        end %>
+
+        <%= render partial: "shared/flash", locals: { message: message, css_class: css_class } %>
+      <% end %>
+
       <%= yield %>
     </div>
   </body>

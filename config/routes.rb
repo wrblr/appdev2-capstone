@@ -1,7 +1,9 @@
 Rails.application.routes.draw do
   # Defines the root path route ("/")
   root "groups#index"
-  devise_for :users
+  devise_for :users, controllers: {
+                       registrations: "users/registrations",
+                     }
   resources :translations
   resources :languages
   resources :messages
