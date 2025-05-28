@@ -58,10 +58,21 @@
         </div>
 
         <!-- Profile link (icon only on mobile, icon+text on larger screens) -->
-        <a class="d-flex align-items-center text-decoration-none text-secondary" href="/users/edit">
-          <i class="fa-regular fa-user me-1"></i>
-          <span class="d-none d-md-inline">Profile</span>
-        </a>
+        <div class="dropdown">
+          <a class="d-flex align-items-center text-decoration-none text-secondary dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="fa-regular fa-user me-1"></i>
+            <span class="d-none d-md-inline">Profile</span>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+            <li>
+              <%= link_to "Edit Profile", edit_user_registration_path, class: "dropdown-item" %>
+            </li>
+            <li>
+              <%= link_to "Sign Out", destroy_user_session_path, method: :delete, data: { turbo_confirm: "Are you sure you want to sign out?" }, class: "dropdown-item text-danger" %>
+            </li>
+          </ul>
+        </div>
+
       </div>
     </div>
   </div>
