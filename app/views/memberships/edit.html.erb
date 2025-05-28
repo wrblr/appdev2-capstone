@@ -10,3 +10,22 @@
   <%= link_to "Show this membership", @membership %> |
   <%= link_to "Back to memberships", memberships_path %>
 </div>
+
+<hr>
+
+<h2 class="mt-5 mb-4 text-center fw-bold" style="font-family: 'Cinzel Decorative', serif;">Edit Membership</h2>
+
+<%= simple_form_for(@membership) do |f| %>
+  <div class="mb-3 fw-bold" style="font-family: 'Cinzel Decorative', serif;">
+    <%= f.association :group, collection: Group.all, label_method: :name, value_method: :id, 
+        label: "Group", input_html: { class: "form-select" } %>
+  </div>
+
+  <div class="form-actions mb-4">
+    <%= f.button :submit, "Update Membership", class: "btn btn-primary w-100" %>
+  </div>
+<% end %>
+
+<div class="text-center mt-4">
+  <%= link_to "Back", memberships_path, class: "btn btn-outline-secondary px-4" %>
+</div>

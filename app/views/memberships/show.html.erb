@@ -8,3 +8,17 @@
 
   <%= button_to "Destroy this membership", @membership, method: :delete %>
 </div>
+
+<hr>
+
+<h2 class="mt-5 mb-4 text-center fw-bold" style="font-family: 'Cinzel Decorative', serif;">Membership Details</h2>
+
+<div class="text-center fw-bold" style="font-family: 'Cinzel Decorative', serif;">
+  <p>Group: <%= @membership.group.name %></p>
+  <p>User: <%= @membership.user.email %></p>
+</div>
+
+<div class="d-flex justify-content-center gap-3 mt-4">
+  <%= link_to "Edit", edit_membership_path(@membership), class: "btn btn-primary px-4" %>
+  <%= link_to "Back", memberships_path, class: "btn btn-outline-secondary px-4" %>
+</div>
