@@ -1,8 +1,72 @@
+<%#= form_with(model: membership) do |form| %>
+  <%# if membership.errors.any? %>
+  <!--    <div style="color: red">
+      <h2><%#= pluralize(membership.errors.count, "error") %> prohibited this membership from being saved:</h2>
+
+      <ul>
+        <%# membership.errors.each do |error| %>-->
+  <!--          <li><%#= error.full_message %></li>-->
+  <%# end %>
+  <!--      </ul>
+    </div>
+  <%# end %>-->
+  <!--
+  <div>
+    <%#= form.label :group_id, style: "display: block" %>-->
+  <%#= form.number_field :group_id %>
+  <!--  </div>
+
+  <div>
+    <%#= form.label :user_id, style: "display: block" %>-->
+  <%#= form.number_field :user_id %>
+  <!--  </div>
+
+  <div>
+    <%#= form.submit %>-->
+  <!--  </div>-->
+  <%# end %>
+  <!--
+<hr>-->
+
+  <!--<h2 class="mt-5 mb-4 text-center fw-bold" style="font-family: 'Cinzel Decorative', serif;">-->
+  <%#= membership.new_record? ? "New Membership" : "Edit Membership" %>
+  <!--</h2>
+
+<%#= form_with(model: membership, local: true) do |form| %>-->
+  <%# if membership.errors.any? %>
+  <!--    <div class="alert alert-danger">
+      <h4 class="fw-bold"><%#= pluralize(membership.errors.count, "error") %> prohibited this membership from being saved:</h4>
+      <ul>
+        <%# membership.errors.each do |error| %>-->
+  <!--          <li><%#= error.full_message %></li>-->
+  <%# end %>
+  <!--      </ul>
+    </div>
+  <%# end %>-->
+  <!--
+  <div class="mb-4 fw-bold" style="font-family: 'Cinzel Decorative', serif;">
+    <%#= form.label :group_id, "Select Group", class: "form-label" %>-->
+  <%#= form.collection_select :group_id, Group.order(:name), :id, :name,
+          { prompt: "Choose a group" },
+          { class: "form-select" } %>
+  <!--  </div>
+
+  <div class="mb-4 fw-bold" style="font-family: 'Cinzel Decorative', serif;">
+    <%#= form.label :user_id, "Select User", class: "form-label" %>-->
+  <%#= form.collection_select :user_id, User.order(:email), :id, :email,
+          { prompt: "Choose a user" },
+          { class: "form-select" } %>
+  <!--  </div>
+
+  <div class="d-flex justify-content-center mt-4">
+    <%#= form.submit class: "btn btn-primary px-5" %>-->
+  <!--  </div>-->
+  <%# end %>
+
 <%= form_with(model: membership) do |form| %>
   <% if membership.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(membership.errors.count, "error") %> prohibited this membership from being saved:</h2>
-
+    <div class="alert alert-danger">
+      <h4><%= pluralize(membership.errors.count, "error") %> prohibited this membership from being saved:</h4>
       <ul>
         <% membership.errors.each do |error| %>
           <li><%= error.full_message %></li>
@@ -10,18 +74,21 @@
       </ul>
     </div>
   <% end %>
-
-  <div>
-    <%= form.label :group_id, style: "display: block" %>
-    <%= form.number_field :group_id %>
+  <div class="mb-3">
+    <%= form.label :group_id, "Select Existing Group", class: "form-label" %>
+    <%= form.collection_select :group_id, Group.all, :id, :name, { prompt: "Choose a group" }, class: "form-select" %>
   </div>
-
-  <div>
-    <%= form.label :user_id, style: "display: block" %>
-    <%= form.number_field :user_id %>
+  <div class="mb-3">
+    <%= link_to "Or create a new group", new_group_path, class: "btn btn-outline-primary" %>
   </div>
-
-  <div>
-    <%= form.submit %>
+  <div class="mb-3">
+    <%= form.label :user_id, "Select User", class: "form-label" %>
+    <%= form.collection_select :user_id, User.all, :id, :email, { prompt: "Choose a user" }, class: "form-select" %>
+  </div>
+  <div class="mb-3">
+    <%= link_to "Or add a new user", new_user_registration_path, class: "btn btn-outline-primary" %>
+  </div>
+  <div class="mt-4">
+    <%= form.submit class: "btn btn-primary w-100" %>
   </div>
 <% end %>
