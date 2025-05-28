@@ -1,4 +1,4 @@
-<h2 class="mb-5 text-center fw-bold" style="font-family: 'Cinzel Decorative', serif;">Edit Profile</h2>
+<h2 class="mt-5 mb-5 text-center fw-bold" style="font-family: 'Cinzel Decorative', serif;">Edit Profile</h2>
 
 <% if resource.errors.any? %>
   <div class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -11,6 +11,24 @@
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
   </div>
 <% end %>
+
+<div class="text-center mb-4">
+  <% if resource.image.attached? %>
+    <%= image_tag url_for(resource.image.variant(resize_to_fill: [150, 150])),
+                class: "rounded-circle mb-3",
+                alt: "#{resource.email}'s avatar",
+                style: "width: 150px; height: 150px; object-fit: cover;" %>
+  <% else %>
+    <%= image_tag "default-avatar.jpeg",
+                class: "rounded-circle mb-3",
+                alt: "Default avatar",
+                style: "width: 150px; height: 150px; object-fit: cover;" %>
+  <% end %>
+
+  <h3 class="fw-bold" style="font-family: 'Cinzel Decorative', serif;">
+    <%= resource.email.split('@').first.titleize %>
+  </h3>
+</div>
 
 <%= simple_form_for(resource, as: resource_name, url: user_registration_path, html: { method: :put, multipart: true }) do |f| %>
 
@@ -59,7 +77,7 @@
   </div>
 <% end %>
 
-<div class="d-flex justify-content-between mt-5">
+<div class="d-flex justify-content-between mt-5 pb-5">
   <%= link_to "Back", root_path, class: "btn btn-primary px-4" %>
 
   <%= button_to "Cancel my account", registration_path(resource_name),
