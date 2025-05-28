@@ -1,20 +1,42 @@
-<h2>Log in</h2>
+<h2 class="mt-5 mb-5 text-center fw-bold" style="font-family: 'Cinzel Decorative', serif;">Log In</h2>
 
-<%= simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-  <div class="form-inputs">
-    <%= f.input :email,
-                required: false,
-                autofocus: true,
-                input_html: { autocomplete: "email" } %>
-    <%= f.input :password,
-                required: false,
-                input_html: { autocomplete: "current-password" } %>
-    <%= f.input :remember_me, as: :boolean if devise_mapping.rememberable? %>
-  </div>
-
-  <div class="form-actions">
-    <%= f.button :submit, "Log in" %>
+<% if resource.errors.any? %>
+  <div class="alert alert-danger alert-dismissible fade show" role="alert">
+    <h5 class="alert-heading">Please fix the following errors:</h5>
+    <ul class="mb-0">
+      <% resource.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
   </div>
 <% end %>
 
-<%= render "devise/shared/links" %>
+<%= simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+  <div class="form-inputs mb-3 fw-bold" style="font-family: 'Cinzel Decorative', serif;">
+    <div class="mb-3">
+      <%= f.label :email, class: "form-label" %>
+      <%= f.email_field :email, required: true, autofocus: true, class: "form-control", autocomplete: "email" %>
+    </div>
+
+    <div class="mb-3">
+      <%= f.label :password, class: "form-label" %>
+      <%= f.password_field :password, required: true, class: "form-control", autocomplete: "current-password" %>
+    </div>
+
+    <% if devise_mapping.rememberable? %>
+      <div class="form-check mb-3">
+        <%= f.check_box :remember_me, class: "form-check-input", id: "remember_me" %>
+        <%= f.label :remember_me, class: "form-check-label", for: "remember_me" %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="form-actions mb-4">
+    <%= f.button :submit, "Log in", class: "btn btn-primary w-100" %>
+  </div>
+<% end %>
+
+<div class="text-center mt-3">
+  <%= render "devise/shared/links" %>
+</div>

@@ -1,18 +1,33 @@
-<h2>Forgot your password?</h2>
+<h2 class="mt-5 mb-5 text-center fw-bold" style="font-family: 'Cinzel Decorative', serif;">
+  Forgot Your Password?
+</h2>
 
-<%= simple_form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
-  <%= f.error_notification %>
-
-  <div class="form-inputs">
-    <%= f.input :email,
-                required: true,
-                autofocus: true,
-                input_html: { autocomplete: "email" } %>
-  </div>
-
-  <div class="form-actions">
-    <%= f.button :submit, "Send me reset password instructions" %>
+<% flash.each do |type, message| %>
+  <% css_class = case type.to_sym
+    when :notice then "success"
+    when :alert then "danger"
+    when :error then "danger"
+    else type
+  end %>
+  <div class="alert alert-<%= css_class %> alert-dismissible fade show" role="alert">
+    <%= message %>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
   </div>
 <% end %>
 
-<%= render "devise/shared/links" %>
+<%= simple_form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
+  <div class="form-inputs mb-3 fw-bold" style="font-family: 'Cinzel Decorative', serif;">
+    <div class="mb-3">
+      <%= f.label :email, class: "form-label" %>
+      <%= f.email_field :email, required: true, autofocus: true, class: "form-control", autocomplete: "email" %>
+    </div>
+  </div>
+
+  <div class="form-actions mb-4">
+    <%= f.button :submit, "Send me reset password instructions", class: "btn btn-primary w-100" %>
+  </div>
+<% end %>
+
+<div class="text-center mt-3">
+  <%= render "devise/shared/links" %>
+</div>
