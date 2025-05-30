@@ -61,9 +61,30 @@ class GroupsController < ApplicationController
   end
 
   # PATCH/PUT /groups/1 or /groups/1.json
+  # def update
+  #   respond_to do |format|
+  #     if @group.update(group_params)
+  #       format.html { redirect_to @group, notice: "Group was successfully updated." }
+  #       format.json { render :show, status: :ok, location: @group }
+  #     else
+  #       format.html { render :edit, status: :unprocessable_entity }
+  #       format.json { render json: @group.errors, status: :unprocessable_entity }
+  #     end
+  #   end
+  # end
+
   def update
     respond_to do |format|
       if @group.update(group_params)
+        # ADDITION: Add members by email (if any were submitted)
+        if params[:new_member_emails].present?
+          emails = params[:new_member_emails].split(/[\n,]+/).map(&:strip).reject(&:blank?)
+          emails.each do |email|
+            user = User.find_by(email: email)
+            Membership.find_or_create_by(user: user, group: @group) if user
+          end
+        end
+
         format.html { redirect_to @group, notice: "Group was successfully updated." }
         format.json { render :show, status: :ok, location: @group }
       else
