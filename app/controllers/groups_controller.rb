@@ -3,7 +3,7 @@ class GroupsController < ApplicationController
 
   # GET /groups or /groups.json
   def index
-    @groups = Group.all
+    @groups = current_user.groups
   end
 
   # GET /groups/1 or /groups/1.json
@@ -35,14 +35,22 @@ class GroupsController < ApplicationController
   # end
   def create
     @group = Group.new(group_params)
+
     if @group.save
-      # Add current user as a member
+      # Add the current user as a member
       Membership.find_or_create_by(user: current_user, group: @group)
 
-      # Add selected users
-      if params[:group][:user_ids]
-        params[:group][:user_ids].reject(&:blank?).each do |user_id|
-          Membership.find_or_create_by(user_id: user_id, group: @group)
+      # Process optional user emails
+      if params[:user_emails].present?
+        user_emails = params[:user_emails].to_s.split(/[\n,]+/).map(&:strip).reject(&:blank?)
+
+        user_emails.each do |email|
+          user = User.find_by(email: email)
+          if user
+            Membership.find_or_create_by(user: user, group: @group)
+          else
+            flash[:alert] = "User with email #{email} not found"
+          end
         end
       end
 
@@ -79,11 +87,11 @@ class GroupsController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_group
-    @group = Group.find(params.expect(:id))
+    @group = Group.find(params[:id])
   end
 
   # Only allow a list of trusted parameters through.
   def group_params
-    params.expect(group: [:name, :image, :messages_count])
+    params.require(:group).permit(:name, :image, :messages_count, user_ids: [])
   end
 end

@@ -1,17 +1,17 @@
 <% content_for :title, "Memberships" %>
 
 <%# Flash messages %>
-<% flash.each do |type, message| %>
-  <% bootstrap_class = case type.to_sym
+<%# flash.each do |type, message| %>
+  <%# bootstrap_class = case type.to_sym
     when :notice then "success"
     when :alert then "danger"
     else type
   end %>
-  <div class="alert alert-<%= bootstrap_class %> alert-dismissible fade show" role="alert">
-    <%= message %>
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+<!--  <div class="alert alert-<%#= bootstrap_class %> alert-dismissible fade show" role="alert">-->
+    <%#= message %>
+<!--    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
   </div>
-<% end %>
+<%# end %>-->
 
 <h1 class="text-center mb-5 mt-5 fw-bold" style="font-family: 'Cinzel Decorative', serif;">Your Group Memberships:</h1>
 
@@ -27,6 +27,7 @@
         <%= link_to group_path(group), class: "text-decoration-none" do %>
           <div class="rounded-circle d-flex align-items-center justify-content-center bg-primary text-white shadow"
             style="width: 120px; height: 120px; font-size: 1.25rem; font-weight: bold; font-family: 'Cinzel Decorative', serif;">
+            <%#= group.name.first.upcase %>
             <%= group.name&.first&.upcase || "?" %>
           </div>
         <% end %>
