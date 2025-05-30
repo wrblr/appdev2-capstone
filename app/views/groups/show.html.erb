@@ -8,3 +8,48 @@
 
   <%= button_to "Destroy this group", @group, method: :delete %>
 </div>
+
+<hr>
+
+<h2 class="mt-5 mb-4 text-center fw-bold" style="font-family: 'Cinzel Decorative', serif;">
+  <%= @group.name %>
+</h2>
+
+<div class="d-flex justify-content-end mb-3">
+  <%= link_to "Edit Group", edit_group_path(@group), class: "btn btn-outline-secondary fw-bold", style: "font-family: 'Cinzel Decorative', serif;" %>
+</div>
+
+<!-- Flash Messages -->
+<% if flash[:notice] %>
+  <div class="alert alert-success text-center"><%= flash[:notice] %></div>
+<% elsif flash[:alert] %>
+  <div class="alert alert-danger text-center"><%= flash[:alert] %></div>
+<% end %>
+
+<!-- Group Members -->
+<h4 class="text-center fw-bold mb-3" style="font-family: 'Cinzel Decorative', serif;">Group Members</h4>
+<div class="d-flex flex-wrap justify-content-center gap-4 mb-4">
+  <% @group.users.each do |user| %>
+    <div class="text-center">
+      <%= link_to new_message_path(recipient_id: user.id), class: "text-decoration-none" do %>
+        <%= image_tag(user.image.attached? ? user.image.variant(resize_to_fill: [100, 100]) : "default-avatar.jpeg",
+                      class: "rounded-circle shadow",
+                      style: "width: 100px; height: 100px; object-fit: cover;",
+                      alt: user.email) %>
+        <p class="fw-bold mt-2" style="font-family: 'Cinzel Decorative', serif; font-size: 0.9rem;">
+          <%= user.email.split('@').first.titleize %>
+        </p>
+      <% end %>
+    </div>
+  <% end %>
+</div>
+
+<!-- Group Chat Option -->
+<div class="text-center mt-5">
+  <%= link_to "Start Group Chat", new_group_message_path(@group), class: "btn btn-primary px-4 fw-bold", style: "font-family: 'Cinzel Decorative', serif;" %>
+</div>
+
+<!-- Back Link -->
+<div class="text-center mt-4">
+  <%= link_to "Back to My Groups", memberships_path, class: "btn btn-outline-secondary px-4" %>
+</div>
