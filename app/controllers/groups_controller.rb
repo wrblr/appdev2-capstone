@@ -20,17 +20,35 @@ class GroupsController < ApplicationController
   end
 
   # POST /groups or /groups.json
+  # def create
+  #   @group = Group.new(group_params)
+
+  #   respond_to do |format|
+  #     if @group.save
+  #       format.html { redirect_to @group, notice: "Group was successfully created." }
+  #       format.json { render :show, status: :created, location: @group }
+  #     else
+  #       format.html { render :new, status: :unprocessable_entity }
+  #       format.json { render json: @group.errors, status: :unprocessable_entity }
+  #     end
+  #   end
+  # end
   def create
     @group = Group.new(group_params)
+    if @group.save
+      # Add current user as a member
+      Membership.find_or_create_by(user: current_user, group: @group)
 
-    respond_to do |format|
-      if @group.save
-        format.html { redirect_to @group, notice: "Group was successfully created." }
-        format.json { render :show, status: :created, location: @group }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @group.errors, status: :unprocessable_entity }
+      # Add selected users
+      if params[:group][:user_ids]
+        params[:group][:user_ids].reject(&:blank?).each do |user_id|
+          Membership.find_or_create_by(user_id: user_id, group: @group)
+        end
       end
+
+      redirect_to memberships_path, notice: "Group created and members added!"
+    else
+      render :new, status: :unprocessable_entity
     end
   end
 
@@ -58,13 +76,14 @@ class GroupsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_group
-      @group = Group.find(params.expect(:id))
-    end
 
-    # Only allow a list of trusted parameters through.
-    def group_params
-      params.expect(group: [ :name, :image, :messages_count ])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_group
+    @group = Group.find(params.expect(:id))
+  end
+
+  # Only allow a list of trusted parameters through.
+  def group_params
+    params.expect(group: [:name, :image, :messages_count])
+  end
 end

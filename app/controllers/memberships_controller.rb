@@ -20,18 +20,35 @@ class MembershipsController < ApplicationController
   end
 
   # POST /memberships or /memberships.json
-  def create
-    @membership = Membership.new(membership_params)
+  # def create
+  #   @membership = Membership.new(membership_params)
 
-    respond_to do |format|
-      if @membership.save
-        format.html { redirect_to @membership, notice: "Membership was successfully created." }
-        format.json { render :show, status: :created, location: @membership }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @membership.errors, status: :unprocessable_entity }
+  #   respond_to do |format|
+  #     if @membership.save
+  #       format.html { redirect_to @membership, notice: "Membership was successfully created." }
+  #       format.json { render :show, status: :created, location: @membership }
+  #     else
+  #       format.html { render :new, status: :unprocessable_entity }
+  #       format.json { render json: @membership.errors, status: :unprocessable_entity }
+  #     end
+  #   end
+  # end
+
+  def create
+    @group = Group.find_or_create_by(name: params[:membership][:group_name])
+
+    # Automatically add the current user to the group
+    Membership.find_or_create_by(user: current_user, group: @group)
+
+    # Add any additional users selected from the form
+    if params[:membership][:user_ids]
+      user_ids = params[:membership][:user_ids].reject(&:blank?)
+      user_ids.each do |id|
+        Membership.find_or_create_by(user_id: id, group: @group)
       end
     end
+
+    redirect_to memberships_path, notice: "Group created and users added!"
   end
 
   # PATCH/PUT /memberships/1 or /memberships/1.json
@@ -58,13 +75,14 @@ class MembershipsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_membership
-      @membership = Membership.find(params.expect(:id))
-    end
 
-    # Only allow a list of trusted parameters through.
-    def membership_params
-      params.expect(membership: [ :group_id, :user_id ])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_membership
+    @membership = Membership.find(params.expect(:id))
+  end
+
+  # Only allow a list of trusted parameters through.
+  def membership_params
+    params.expect(membership: [:group_id, :user_id])
+  end
 end

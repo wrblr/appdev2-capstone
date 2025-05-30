@@ -14,6 +14,8 @@
 
 <% content_for :title, "New Membership" %>
 
+<h2 class="mt-5 mb-4 text-center fw-bold" style="font-family: 'Cinzel Decorative', serif;">Create a New Membership</h2>
+
 <div class="container mt-5">
   <div class="row justify-content-center">
     <div class="col-md-6">
@@ -24,4 +26,42 @@
       </div>
     </div>
   </div>
+</div>
+
+<hr>
+
+<h2 class="mt-5 mb-4 text-center fw-bold" style="font-family: 'Cinzel Decorative', serif;">Create a New Membership</h2>
+
+<%= form_with url: memberships_path, method: :post, local: true do |form| %>
+  <% if @membership.errors.any? %>
+    <div class="alert alert-danger">
+      <h4><%= pluralize(@membership.errors.count, "error") %> prevented this membership from being saved:</h4>
+      <ul>
+        <% @membership.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="mb-3 fw-bold" style="font-family: 'Cinzel Decorative', serif;">
+    <%= form.label :group_name, "Group Name", class: "form-label" %>
+    <%= form.text_field :group_name, class: "form-control", required: true %>
+  </div>
+
+  <div class="mb-3 fw-bold" style="font-family: 'Cinzel Decorative', serif;">
+    <%= form.label :user_ids, "Add Other Members", class: "form-label" %>
+    <%= select_tag "membership[user_ids][]",
+        options_from_collection_for_select(User.where.not(id: current_user.id), :id, :email),
+        multiple: true, class: "form-select" %>
+    <small class="form-text text-muted">Hold ⌘ or Ctrl to select multiple users</small>
+  </div>
+
+  <div class="text-center mt-4">
+    <%= form.submit "Create Group", class: "btn btn-primary px-5" %>
+  </div>
+<% end %>
+
+<div class="text-center mt-4">
+  <%= link_to "Back", memberships_path, class: "btn btn-outline-secondary px-4" %>
 </div>
