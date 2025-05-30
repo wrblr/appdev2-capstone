@@ -31,6 +31,7 @@ class User < ApplicationRecord
   belongs_to :preferred_language, required: true, class_name: "Language", foreign_key: "preferred_language_id"
 
   has_many :groups, through: :memberships, source: :group
+  has_many :created_groups, class_name: "Group", foreign_key: "creator_id"
 
   has_one_attached :image
 

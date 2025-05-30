@@ -34,7 +34,7 @@ class GroupsController < ApplicationController
   #   end
   # end
   def create
-    @group = Group.new(group_params)
+    @group = current_user.created_groups.build(group_params)
 
     if @group.save
       # Add the current user as a member
