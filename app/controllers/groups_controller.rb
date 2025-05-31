@@ -76,7 +76,7 @@ class GroupsController < ApplicationController
   def update
     respond_to do |format|
       if @group.update(group_params)
-        # ADDITION: Add members by email (if any were submitted)
+        # Add new members by email
         if params[:new_member_emails].present?
           emails = params[:new_member_emails].split(/[\n,]+/).map(&:strip).reject(&:blank?)
           emails.each do |email|
@@ -85,7 +85,7 @@ class GroupsController < ApplicationController
           end
         end
 
-        format.html { redirect_to @group, notice: "Group was successfully updated." }
+        format.html { redirect_to edit_group_path(@group), notice: "Group was successfully updated." }
         format.json { render :show, status: :ok, location: @group }
       else
         format.html { render :edit, status: :unprocessable_entity }

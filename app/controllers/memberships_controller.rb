@@ -94,10 +94,11 @@ class MembershipsController < ApplicationController
 
   # DELETE /memberships/1 or /memberships/1.json
   def destroy
+    group = @membership.group  # Capture the group before deletion
     @membership.destroy!
 
     respond_to do |format|
-      format.html { redirect_to memberships_path, status: :see_other, notice: "Membership was successfully destroyed." }
+      format.html { redirect_to edit_group_path(group), notice: "Member was successfully removed." }
       format.json { head :no_content }
     end
   end
@@ -106,7 +107,11 @@ class MembershipsController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_membership
-    @membership = current_user.memberships.find(params[:id])
+    @membership = Membership.find(params[:id])
+
+    unless @membership.user == current_user || @membership.group.creator == current_user
+      redirect_to memberships_path, alert: "You're not authorized to perform this action."
+    end
   end
 
   # Only allow a list of trusted parameters through.
