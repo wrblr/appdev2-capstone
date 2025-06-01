@@ -29,6 +29,7 @@ class Message < ApplicationRecord
 
   # Validation: Must have either a recipient OR a group, but not both
   validate :recipient_or_group_present
+  validates :body, presence: true, unless: -> { audio.present? || video.present? }
 
   private
 
