@@ -8,6 +8,14 @@ class MessagesController < ApplicationController
 
   # GET /messages/1 or /messages/1.json
   def show
+    if params[:id] # user-to-user chat
+      @recipient = User.find(params[:id])
+      @messages = Message.between(current_user, @recipient).order(:created_at)
+      @message = Message.new(recipient: @recipient)
+    else
+      @message = Message.find(params[:id])
+      # fallback for regular message show, if still needed
+    end
   end
 
   # GET /messages/new
