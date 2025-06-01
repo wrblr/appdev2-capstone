@@ -4,6 +4,14 @@ Rails.application.routes.draw do
   devise_for :users, controllers: {
                        registrations: "users/registrations",
                      }
+  get "/users/:id/chat", to: "messages#private_chat", as: :user_chat
+
+  resources :users, only: [] do
+    member do
+      get :chat, to: "messages#private_chat"
+    end
+  end
+
   resources :translations
   resources :languages
   resources :messages

@@ -1,32 +1,43 @@
-<div id="<%= dom_id message %>">
+<!--<div id="<%#= dom_id message %>">
   <p>
     <strong>Group:</strong>
-    <%= message.group_id %>
-  </p>
+    <%#= message.group_id %>-->
+<!--  </p>
 
   <p>
     <strong>Sender:</strong>
-    <%= message.sender_id %>
-  </p>
+    <%#= message.sender_id %>-->
+<!--  </p>
 
   <p>
     <strong>Audio:</strong>
-    <%= message.audio %>
-  </p>
+    <%#= message.audio %>-->
+<!--  </p>
 
   <p>
     <strong>Video:</strong>
-    <%= message.video %>
-  </p>
+    <%#= message.video %>-->
+<!--  </p>
 
   <p>
     <strong>Body:</strong>
-    <%= message.body %>
-  </p>
+    <%#= message.body %>-->
+<!--  </p>
 
   <p>
     <strong>Original language:</strong>
-    <%= message.original_language_id %>
-  </p>
+    <%#= message.original_language_id %>-->
+<!--  </p>
 
+</div>-->
+
+<!--<div class="mb-2">
+  <strong><%#= message.sender.email.split('@').first.titleize %>:</strong>
+  <%#= message.body %>-->
+<!--</div>-->
+
+<div class="mb-2">
+  <strong><%= message.sender.email.split('@').first.titleize %>:</strong>
+  <span><%= message.body %></span>
+  <small class="text-muted ms-2"><%= message.created_at.strftime("%H:%M") %></small>
 </div>

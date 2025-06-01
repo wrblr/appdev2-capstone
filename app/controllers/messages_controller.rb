@@ -20,18 +20,38 @@ class MessagesController < ApplicationController
   end
 
   # POST /messages or /messages.json
+  # def create
+  #   @message = Message.new(message_params)
+
+  #   respond_to do |format|
+  #     if @message.save
+  #       format.html { redirect_to @message, notice: "Message was successfully created." }
+  #       format.json { render :show, status: :created, location: @message }
+  #     else
+  #       format.html { render :new, status: :unprocessable_entity }
+  #       format.json { render json: @message.errors, status: :unprocessable_entity }
+  #     end
+  #   end
+  # end
+
   def create
     @message = Message.new(message_params)
+    @group = @message.group ||= Group.find(params[:group_id])
 
-    respond_to do |format|
-      if @message.save
-        format.html { redirect_to @message, notice: "Message was successfully created." }
-        format.json { render :show, status: :created, location: @message }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @message.errors, status: :unprocessable_entity }
+    if @message.save
+      respond_to do |format|
+        format.turbo_stream
+        format.html { redirect_to group_path(@group) }
       end
+    else
+      flash[:alert] = "Message could not be sent."
+      redirect_to group_path(@group)
     end
+  end
+
+  def private_chat
+    @recipient = User.find(params[:id])
+    @messages = Message.between(current_user, @recipient).order(created_at: :asc)
   end
 
   # PATCH/PUT /messages/1 or /messages/1.json
@@ -58,13 +78,16 @@ class MessagesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_message
-      @message = Message.find(params.expect(:id))
-    end
 
-    # Only allow a list of trusted parameters through.
-    def message_params
-      params.expect(message: [ :group_id, :sender_id, :audio, :video, :body, :original_language_id ])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_message
+    @message = Message.find(params.expect(:id))
+  end
+
+  # Only allow a list of trusted parameters through.
+  def message_params
+    # params.expect(message: [:group_id, :sender_id, :audio, :video, :body, :original_language_id])
+    # params.require(:message).permit(:group_id, :sender_id, :audio, :video, :body, :original_language_id)
+    params.require(:message).permit(:group_id, :sender_id, :recipient_id, :body, :original_language_id)
+  end
 end

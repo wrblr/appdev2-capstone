@@ -1,63 +1,64 @@
-<p style="color: green"><%= notice %></p>
+<!--<p style="color: green"><%#= notice %></p>
 
-<% content_for :title, "Messages" %>
-
+<%# content_for :title, "Messages" %>-->
+<!--
 <h1>Messages</h1>
 
 <div id="messages">
-  <% @messages.each do |message| %>
-    <%= render message %>
-    <p>
-      <%= link_to "Show this message", message %>
-    </p>
-  <% end %>
-</div>
+  <%# @messages.each do |message| %>-->
+    <%#= render message %>
+<!--    <p>-->
+      <%#= link_to "Show this message", message %>
+<!--    </p>-->
+  <%# end %>
+<!--</div>
 
-<%= link_to "New message", new_message_path %>
-
-<!-- app/views/messages/index.html.erb -->
-
+<%#= link_to "New message", new_message_path %>-->
+<!---->
+ <!--app/views/messages/index.html.erb--> 
+<!---->
 <%# Flash messages %>
-<% flash.each do |type, message| %>
-  <% bootstrap_class = case type.to_sym
+<%# flash.each do |type, message| %>
+  <%# bootstrap_class = case type.to_sym
     when :notice then "success"
     when :alert then "danger"
     else type
   end %>
-  <div class="alert alert-<%= bootstrap_class %> alert-dismissible fade show" role="alert">
-    <%= message %>
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+<!--  <div class="alert alert-<%#= bootstrap_class %> alert-dismissible fade show" role="alert">-->
+    <%#= message %>
+<!--    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
   </div>
-<% end %>
-
+<%# end %>-->
+<!--
 <h2 class="mt-5 mb-4 text-center fw-bold" style="font-family: 'Cinzel Decorative', serif;">
   Inbox
 </h2>
 
 <div class="d-flex justify-content-end mb-4">
-  <%= link_to "New Message", new_message_path, class: "btn btn-primary" %>
-</div>
+  <%#= link_to "New Message", new_message_path, class: "btn btn-primary" %>-->
+<!--</div>
 
-<% if @messages.any? %>
-  <div class="list-group">
-    <% @messages.each do |message| %>
-      <div class="list-group-item d-flex justify-content-between align-items-center">
+<%# if @messages.any? %>-->
+<!--  <div class="list-group">-->
+    <%# @messages.each do |message| %>
+<!--      <div class="list-group-item d-flex justify-content-between align-items-center">
         <div>
           <h5 class="mb-1 fw-bold" style="font-family: 'Cinzel Decorative', serif;">
-            <%= message.subject %>
-          </h5>
-          <p class="mb-1"><%= truncate(message.body, length: 100) %></p>
-          <small class="text-muted">From: <%= message.sender.name %> | <%= time_ago_in_words(message.created_at) %> ago</small>
+            <%#= message.subject %>-->
+<!--          </h5>
+          <p class="mb-1"><%#= truncate(message.body, length: 100) %></p>
+          <small class="text-muted">From: <%#= message.sender.name %> | <%= time_ago_in_words(message.created_at) %> ago</small>
         </div>
         <div>
-          <%= link_to "View", message_path(message), class: "btn btn-outline-secondary btn-sm me-2" %>
-          <%= link_to "Delete", message_path(message), method: :delete,
+          <%#= link_to "View", message_path(message), class: "btn btn-outline-secondary btn-sm me-2" %>-->
+          <%#= link_to "Delete", message_path(message), method: :delete,
                 data: { confirm: "Are you sure?" },
                 class: "btn btn-outline-danger btn-sm" %>
-        </div>
+<!--        </div>
       </div>
-    <% end %>
-  </div>
-<% else %>
-  <p class="text-center text-muted mt-4">You have no messages.</p>
-<% end %>
+    <%# end %>-->
+<!--  </div>-->
+<%# else %>
+<!--  <p class="text-center text-muted mt-4">You have no messages.</p>-->
+<%# end %>
+<!---->

@@ -1,0 +1,3 @@
+<% group.messages.order(created_at: :asc).each do |message| %>
+  <%= render partial: "messages/message", locals: { message: message } %>
+<% end %>

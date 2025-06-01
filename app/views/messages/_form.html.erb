@@ -1,47 +1,57 @@
-<%= form_with(model: message) do |form| %>
-  <% if message.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(message.errors.count, "error") %> prohibited this message from being saved:</h2>
+<%#= form_with(model: message) do |form| %>
+  <%# if message.errors.any? %>
+  <!--    <div style="color: red">
+      <h2><%#= pluralize(message.errors.count, "error") %> prohibited this message from being saved:</h2>
 
       <ul>
-        <% message.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
+        <%# message.errors.each do |error| %>-->
+  <!--          <li><%#= error.full_message %></li>-->
+  <%# end %>
+  <!--      </ul>
+    </div>
+  <%# end %>-->
+  <!--
+  <div>
+    <%#= form.label :group_id, style: "display: block" %>-->
+  <%#= form.number_field :group_id %>
+  <!--  </div>
+
+  <div>
+    <%#= form.label :sender_id, style: "display: block" %>-->
+  <%#= form.number_field :sender_id %>
+  <!--  </div>
+
+  <div>
+    <%#= form.label :audio, style: "display: block" %>-->
+  <%#= form.text_field :audio %>
+  <!--  </div>
+
+  <div>
+    <%#= form.label :video, style: "display: block" %>-->
+  <%#= form.text_field :video %>
+  <!--  </div>
+
+  <div>
+    <%#= form.label :body, style: "display: block" %>-->
+  <%#= form.textarea :body %>
+  <!--  </div>
+
+  <div>
+    <%#= form.label :original_language_id, style: "display: block" %>-->
+  <%#= form.number_field :original_language_id %>
+  <!--  </div>
+
+  <div>
+    <%#= form.submit %>-->
+  <!--  </div>-->
+  <%# end %>
+
+  <%= form_with model: message, url: group_messages_path(group), data: { turbo_stream: true }, html: { id: "group-message-form" } do |form| %>
+    <%= form.hidden_field :sender_id, value: current_user.id %>
+    <%= form.hidden_field :group_id, value: group.id %>
+    <%= form.hidden_field :original_language_id, value: current_user.preferred_language_id %>
+    <div class="input-group">
+      <%= form.text_field :body, class: "form-control", placeholder: "Type your message...", autofocus: true %>
+      <button type="submit" class="btn btn-primary">Send</button>
     </div>
   <% end %>
-
-  <div>
-    <%= form.label :group_id, style: "display: block" %>
-    <%= form.number_field :group_id %>
-  </div>
-
-  <div>
-    <%= form.label :sender_id, style: "display: block" %>
-    <%= form.number_field :sender_id %>
-  </div>
-
-  <div>
-    <%= form.label :audio, style: "display: block" %>
-    <%= form.text_field :audio %>
-  </div>
-
-  <div>
-    <%= form.label :video, style: "display: block" %>
-    <%= form.text_field :video %>
-  </div>
-
-  <div>
-    <%= form.label :body, style: "display: block" %>
-    <%= form.textarea :body %>
-  </div>
-
-  <div>
-    <%= form.label :original_language_id, style: "display: block" %>
-    <%= form.number_field :original_language_id %>
-  </div>
-
-  <div>
-    <%= form.submit %>
-  </div>
-<% end %>
