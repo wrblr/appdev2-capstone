@@ -12,9 +12,17 @@ window.$ = jquery;
 import Rails from "@rails/ujs"
 Rails.start();
 
-// Add to application.js or inside a script tag on the show page
+// To scroll group chat to bottom after each new post:
 document.addEventListener("turbo:load", () => {
   const chatWindow = document.getElementById("group-chat-window");
+  if (chatWindow) {
+    chatWindow.scrollTop = chatWindow.scrollHeight;
+  }
+});
+
+// To scroll group chat to bottom after each new post:
+document.addEventListener("turbo:load", () => {
+  const chatWindow = document.getElementById("private-chat-window");
   if (chatWindow) {
     chatWindow.scrollTop = chatWindow.scrollHeight;
   }

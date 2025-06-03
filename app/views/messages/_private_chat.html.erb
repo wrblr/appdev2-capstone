@@ -1,4 +1,4 @@
-<div id="private-chat-window" class="space-y-2">
+<div id="private-chat-window">
   <% if @messages.any? %>
     <% @messages.each do |message| %>
       <%= render partial: "messages/private_message", locals: { message: message, current_user: current_user } %>
