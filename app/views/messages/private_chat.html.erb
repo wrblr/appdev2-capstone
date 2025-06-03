@@ -1,0 +1,35 @@
+<div class="mt-4">
+  <div class="text-center mb-4">
+    <h3 class="fw-bold" style="font-family: 'Cinzel Decorative', serif;">Chat with <%= @recipient.email.split('@').first.titleize %></h3>
+    <p class="text-muted">Private chat: Talk with your friend in real time</p>
+  </div>
+
+  <div id="chat-messages" class="border rounded p-4 mb-3" style="height: 300px; overflow-y: scroll; background-color: #f8f9fa;">
+    <%= turbo_frame_tag "private-chat-window" do %>
+      <%= render partial: "messages/private_chat", locals: {
+        current_user: current_user,
+        recipient: @recipient,
+        messages: @messages
+      } %>
+    <% end %>
+  </div>
+
+  <%= form_with model: @message,
+              url: chat_user_messages_path(current_user.id, @recipient.id),
+              method: :post,
+              data: { turbo_stream: true },
+              html: { id: "private-message-form", class: "flex gap-2" } do |form| %>
+
+    <%= form.hidden_field :sender_id, value: current_user.id %>
+    <%= form.hidden_field :recipient_id, value: @recipient.id %>
+    <%= form.hidden_field :original_language_id, value: current_user.preferred_language_id %>
+
+    <%= form.text_field :body,
+                      placeholder: "Type your message...",
+                      class: "flex-1 rounded border p-2" %>
+
+    <%= form.submit "Send", class: "bg-blue-500 text-white px-4 py-2 rounded" %>
+  <% end %>
+</div>
+
+<%= turbo_stream_from "group_#{@group.id}_messages" %>

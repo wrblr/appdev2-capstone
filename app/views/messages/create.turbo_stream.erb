@@ -1,2 +1,15 @@
-<%= turbo_stream.append "group_messages", partial: "messages/message", locals: { message: @message } %>
-<%= turbo_stream.replace "group-message-form", partial: "messages/form", locals: { group: @group, message: Message.new } %>
+<%# if @message.group.present? %>
+<%#= turbo_stream.append "group-messages", partial: "messages/message", locals: { message: @message } %>
+<%#= turbo_stream.replace "group-message-form", partial: "messages/form", locals: { group: @group, message: Message.new } %>
+<%# else %>
+<%#= turbo_stream.append "private-chat-window", partial: "messages/private_chat", locals: { message: @message, current_user: current_user } %>
+<%#= turbo_stream.replace "private-message-form", partial: "messages/private_form", locals: { recipient: @recipient, message: Message.new } %>
+<%# end %>
+
+<% if @message.group.present? %>
+  <%= turbo_stream.append "group-messages", partial: "messages/message", locals: { message: @message } %>
+  <%= turbo_stream.replace "group-message-form", partial: "messages/form", locals: { group: @group, message: Message.new } %>
+<% else %>
+  <%= turbo_stream.append "private-chat-window", partial: "messages/private_message", locals: { message: @message, current_user: current_user } %>
+  <%= turbo_stream.replace "private-message-form", partial: "messages/private_form", locals: { recipient: @recipient, message: Message.new } %>
+<% end %>

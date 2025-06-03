@@ -1,20 +1,23 @@
 Rails.application.routes.draw do
+  # Devise routes with custom registration controller
+  devise_for :users, controllers: {
+                       registrations: "users/registrations",
+                     }
+
   # Root route
   root "memberships#index"
 
-  # Devise routes with custom registration controller
-  devise_for :users, controllers: {
-            registrations: "users/registrations",
-          }
+  # Private user-to-user chat route
+  get "messages/:sender_id/:recipient_id", to: "messages#private_chat", as: :chat_user
+  post "messages/:sender_id/:recipient_id", to: "messages#create", as: :chat_user_messages
 
-  # Private user chat route
-  resources :users, only: [] do
-    member do
-      get :chat, to: "messages#private_chat", as: :chat
-    end
-  end
-
-  get 'messages/user/:id', to: 'messages#show', as: :user_chat
+  # resources :users, only: [] do
+  #   member do
+  #     # Private user-to-user chat route
+  #     get "messages/:sender_id/:recipient_id", to: "messages#private_chat", as: :chat_user
+  #     post "messages/:sender_id/:recipient_id", to: "messages#create", as: :chat_user_messages
+  #   end
+  # end
 
   # Translation, Language, Memberships, and Message routes
   resources :translations

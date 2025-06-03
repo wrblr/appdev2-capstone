@@ -1,0 +1,26 @@
+<%# messages.each do |message| %>
+<!--  <div class="mb-2 text-sm">-->
+    <%# if message.sender_id == current_user.id %>
+<!--      <p class="text-right"><strong>You:</strong> <%#= message.body %></p>-->
+    <%# else %>
+<!--      <p class="text-left"><strong><%#= recipient.name %>:</strong> <%= message.body %></p>-->
+    <%# end %>
+<!--  </div>-->
+<%# end %>
+
+<%= form_with model: @message,
+                url: chat_user_messages_path(current_user.id, @recipient.id),
+                method: :post,
+                data: { turbo_stream: true },
+                html: { id: "private-message-form", class: "flex gap-2" } do |form| %>
+
+  <%= form.hidden_field :sender_id, value: current_user.id %>
+  <%= form.hidden_field :recipient_id, value: @recipient.id %>
+  <%= form.hidden_field :original_language_id, value: current_user.preferred_language_id %>
+
+  <%= form.text_field :body,
+                        placeholder: "Type your message...",
+                        class: "flex-1 rounded border p-2" %>
+
+  <%= form.submit "Send", class: "bg-blue-500 text-white px-4 py-2 rounded" %>
+<% end %>

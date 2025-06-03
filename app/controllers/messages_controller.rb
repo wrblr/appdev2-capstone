@@ -8,13 +8,20 @@ class MessagesController < ApplicationController
 
   # GET /messages/1 or /messages/1.json
   def show
-    if params[:id] # user-to-user chat
-      @recipient = User.find(params[:id])
-      @messages = Message.between(current_user, @recipient).order(:created_at)
-      @message = Message.new(recipient: @recipient)
+    if params[:user_id] # private chat
+      @recipient = User.find(params[:user_id])
+      @messages = Message.where(sender_id: current_user.id, recipient_id: @recipient.id)
+                         .or(Message.where(sender_id: @recipient.id, recipient_id: current_user.id))
+                         .order(:created_at)
+      @message = Message.new(sender_id: current_user.id, recipient_id: @recipient.id)
+    elsif params[:group_id] # group chat
+      @group = Group.find(params[:group_id])
+      @messages = @group.messages.order(:created_at)
+      @message = Message.new(sender_id: current_user.id, group_id: @group.id)
     else
-      @message = Message.find(params[:id])
-      # fallback for regular message show, if still needed
+      # fallback - optional
+      @messages = Message.none
+      @message = Message.new
     end
   end
 
@@ -44,22 +51,53 @@ class MessagesController < ApplicationController
 
   def create
     @message = Message.new(message_params)
-    @group = @message.group ||= Group.find(params[:group_id])
+
+    if @message.group_id.present?
+      @group = Group.find(@message.group_id)
+    else
+      @recipient = User.find(@message.recipient_id)
+    end
 
     if @message.save
       respond_to do |format|
         format.turbo_stream
-        format.html { redirect_to group_path(@group) }
+        format.html do
+          if @group
+            redirect_to group_path(@group)
+          else
+            redirect_to chat_user_path(@recipient)
+          end
+        end
       end
     else
       flash[:alert] = "Message could not be sent."
-      redirect_to group_path(@group)
+      if @group
+        redirect_to group_path(@group)
+      else
+        redirect_to chat_user_path(@recipient)
+      end
     end
   end
 
   def private_chat
-    @recipient = User.find(params[:id])
-    @messages = Message.between(current_user, @recipient).order(created_at: :asc)
+    @recipient = User.find(params[:recipient_id])
+
+    @messages = Message
+      .where(sender_id: current_user.id, recipient_id: @recipient.id)
+      .or(Message.where(sender_id: @recipient.id, recipient_id: current_user.id))
+      .order(:created_at)
+
+    @message = Message.new(
+      sender_id: current_user.id,
+      recipient_id: @recipient.id,
+      original_language_id: current_user.preferred_language_id,
+    )
+  end
+
+  def group_chat
+    @group = Group.find(params[:group_id])
+    @message = Message.new(sender_id: current_user.id, group_id: @group.id)
+    @messages = @group.messages.order(:created_at)
   end
 
   # PATCH/PUT /messages/1 or /messages/1.json
@@ -89,7 +127,6 @@ class MessagesController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_message
-    @message = Message.find(params.expect(:id))
   end
 
   # Only allow a list of trusted parameters through.
