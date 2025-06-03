@@ -4,6 +4,14 @@ class MembershipsController < ApplicationController
   # GET /memberships or /memberships.json
   def index
     @memberships = current_user.memberships.includes(:group)
+
+    @chat_partners = User.where(id: Message
+                                  .where(group_id: nil) # private messages only
+                                  .where("sender_id = :id OR recipient_id = :id", id: current_user.id)
+                                  .pluck(:sender_id, :recipient_id)
+                                  .flatten
+                                  .uniq
+                                  .reject { |id| id == current_user.id }) # exclude self
   end
 
   # GET /memberships/1 or /memberships/1.json

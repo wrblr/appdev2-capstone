@@ -1,47 +1,104 @@
-<% content_for :title, "Memberships" %>
+<%# content_for :title, "Memberships" %>
+<!--
+<h1 class="text-center mb-5 mt-5 fw-bold" style="font-family: 'Cinzel Decorative', serif;">Your Group Memberships:</h1>
 
-<%# Flash messages %>
-<%# flash.each do |type, message| %>
-  <%# bootstrap_class = case type.to_sym
-    when :notice then "success"
-    when :alert then "danger"
-    else type
-  end %>
-  <!--  <div class="alert alert-<%#= bootstrap_class %> alert-dismissible fade show" role="alert">-->
-  <%#= message %>
-  <!--    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-  </div>
-<%# end %>-->
+<div class="text-center mt-5 mb-5">
+  <%#= link_to "Join a New Group", new_membership_path, class: "btn btn-primary px-4 py-2" %>-->
+<!--</div>
 
-  <h1 class="text-center mb-5 mt-5 fw-bold" style="font-family: 'Cinzel Decorative', serif;">Your Group Memberships:</h1>
+<%# if @memberships.any? %>-->
+<!--  <div class="d-flex flex-wrap justify-content-center gap-4">-->
+    <%# @memberships.each do |membership| %>
+      <%# group = membership.group %>
+<!--      <div class="text-center">-->
+        <%#= link_to group_path(group), class: "text-decoration-none" do %>
+<!--          <div class="group-circle mb-2 mx-auto">-->
+            <%# if group.image.attached? %>
+              <%#= image_tag group.image.variant(resize_to_fill: [120, 120]), class: "img-fluid rounded-circle shadow-sm", style: "object-fit: cover; width: 120px; height: 120px;" %>
+            <%# else %>
+              <%#= image_tag "default-group.jpeg", class: "img-fluid rounded-circle shadow-sm", style: "object-fit: cover; width: 120px; height: 120px;" %>
+            <%# end %>
+<!--          </div>-->
+        <%# end %>
+<!--        <p class="mt-2 fw-bold" style="font-family: 'Cinzel Decorative', serif;"><%#= group.name %></p>
 
-  <div class="text-center mt-5 mb-5">
-    <%= link_to "Join a New Group", new_membership_path, class: "btn btn-primary px-4 py-2" %>
-  </div>
-
-  <% if @memberships.any? %>
-    <div class="d-flex flex-wrap justify-content-center gap-4">
-      <% @memberships.each do |membership| %>
-        <% group = membership.group %>
-        <div class="text-center">
-          <%= link_to group_path(group), class: "text-decoration-none" do %>
-            <div class="group-circle mb-2 mx-auto">
-              <% if group.image.attached? %>
-                <%= image_tag group.image.variant(resize_to_fill: [120, 120]), class: "img-fluid rounded-circle shadow-sm", style: "object-fit: cover; width: 120px; height: 120px;" %>
-              <% else %>
-                <%= image_tag "default-group.jpeg", class: "img-fluid rounded-circle shadow-sm", style: "object-fit: cover; width: 120px; height: 120px;" %>
-              <% end %>
-            </div>
-          <% end %>
-          <p class="mt-2 fw-bold" style="font-family: 'Cinzel Decorative', serif;"><%= group.name %></p>
-
-          <%= button_to "Leave Group", membership_path(membership),
-              method: :delete,
+        <%#= button_to "Leave Group", membership_path(membership),-->
+<!--              method: :delete,
               data: { confirm: "Are you sure you want to leave #{group.name}?" },
               class: "btn btn-outline-danger btn-sm mt-2" %>
-        </div>
-      <% end %>
+      </div>
+    <%# end %>-->
+<!--  </div>-->
+<%# else %>
+<!--  <p class="text-center text-muted mt-4">No group memberships found.</p>-->
+<%# end %>
+
+<% content_for :title, "Messages" %>
+
+<h1 class="text-center mb-5 mt-5 fw-bold" style="font-family: 'Cinzel Decorative', serif;">
+  Your Chats
+</h1>
+
+<div class="d-flex justify-content-center gap-5 flex-wrap">
+
+  <!-- GROUP CHAT SECTION -->
+  <div class="bg-white p-4 shadow rounded" style="width: 560px;">
+    <h2 class="text-center fw-bold mb-3" style="font-family: 'Cinzel Decorative';">Group Chats</h2>
+
+    <div class="text-center mb-3">
+      <%= link_to "Join a New Group", new_membership_path, class: "btn btn-primary px-4 py-2" %>
     </div>
-  <% else %>
-    <p class="text-center text-muted mt-4">No group memberships found.</p>
-  <% end %>
+    <hr>
+    <% if @memberships.any? %>
+      <div class="d-flex flex-wrap justify-content-center gap-3">
+        <% @memberships.each do |membership| %>
+          <% group = membership.group %>
+          <div class="text-center">
+            <%= link_to group_path(group), class: "text-decoration-none" do %>
+              <div class="group-circle mb-2 mx-auto">
+                <% if group.image.attached? %>
+                  <%= image_tag group.image.variant(resize_to_fill: [120, 120]),
+                        class: "img-fluid rounded-circle shadow-sm",
+                        style: "object-fit: cover; width: 120px; height: 120px;" %>
+                <% else %>
+                  <%= image_tag "default-group.jpeg",
+                        class: "img-fluid rounded-circle shadow-sm",
+                        style: "object-fit: cover; width: 120px; height: 120px;" %>
+                <% end %>
+              </div>
+              <p class="fw-bold"><%= group.name %></p>
+            <% end %>
+
+            <%= button_to "Leave Group", membership_path(membership),
+                method: :delete,
+                data: { confirm: "Are you sure you want to leave #{group.name}?" },
+                class: "btn btn-outline-danger btn-sm" %>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <p class="text-center text-muted mt-3">No group memberships found.</p>
+    <% end %>
+  </div>
+
+  <!-- PRIVATE CHAT SECTION -->
+  <div class="bg-white p-4 shadow rounded" style="width: 360px;">
+    <h2 class="text-center fw-bold mb-3" style="font-family: 'Cinzel Decorative';">Private Chats</h2>
+    <hr>
+    <% if @chat_partners.any? %>
+      <div class="d-flex flex-column gap-3">
+        <% @chat_partners.each do |user| %>
+          <%= link_to chat_user_path(current_user, user), class: "d-flex align-items-center gap-3 text-decoration-none text-dark p-2 border rounded hover:bg-light" do %>
+            <%= image_tag user.image.attached? ? user.image.variant(resize_to_fill: [40, 40]) : "default-avatar.jpeg",
+                  class: "rounded-circle",
+                  style: "width: 40px; height: 40px; object-fit: cover;" %>
+            <span><%= user.email.split('@').first.titleize %></span>
+          <% end %>
+        <% end %>
+      </div>
+    <% else %>
+      <p class="text-center text-muted mt-3">No recent private chats found.</p>
+    <% end %>
+  </div>
+
+</div>
