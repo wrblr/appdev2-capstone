@@ -5,7 +5,7 @@ Rails.application.routes.draw do
                      }
 
   # Root route
-  root "memberships#index"
+  root to: "memberships#index"
 
   # Private user-to-user chat route
   get "/messages/private/new", to: "messages#new_private", as: :new_private_message
