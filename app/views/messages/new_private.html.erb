@@ -1,17 +1,26 @@
-<h1 class="fw-bold text-center" style="font-family: 'Cinzel Decorative', serif;">Start a New Private Chat</h1>
+<div class="container mt-5 mb-5 p-4 bg-white rounded shadow-sm" style="max-width: 800px; height: 600px">
+  <%= link_to "← Back to Your Groups", memberships_path, class: "btn btn-link fw-bold", style: "font-family: 'Cinzel Decorative', serif;" %>
+  <h2 class="text-center mb-5 mt-5 fw-bold" style="font-family: 'Cinzel Decorative', serif;">Start a New Private Chat</h1>
 
-<%= form_with url: "#", method: :get, local: true, id: "start-private-chat-form" do |form| %>
-  <div class="mb-3">
-    <%= label_tag :recipient_id, "Select a user:", class: "form-label fw-bold", style: "font-family: 'Cinzel Decorative', serif;" %>
-    <%= select_tag :recipient_id,
+  <div class="d-flex justify-content-center gap-5 flex-wrap">
+    <div class="bg-white p-4 shadow rounded" style="width: 360px;">
+      <%= form_with url: "#", method: :get, local: true, id: "start-private-chat-form" do |form| %>
+        <div class="mb-3 justify-content-center">
+          <%= label_tag :recipient_id, "Select a user:", class: "form-label fw-bold", style: "font-family: 'Cinzel Decorative', serif;" %>
+          <%= select_tag :recipient_id,
         options_from_collection_for_select(@users, :id, ->(u) { u.email.split('@').first.titleize }),
         prompt: "Choose a user...",
         class: "form-select",
         style: "font-family: 'Cinzel Decorative', serif;" %>
-  </div>
+        </div>
 
-  <%= submit_tag "Start Chat", class: "btn btn-primary", style: "font-family: 'Cinzel Decorative', serif;" %>
-<% end %>
+        <div class="text-center mb-3">
+          <%= submit_tag "Start Chat", class: "btn btn-primary", style: "font-family: 'Cinzel Decorative', serif;" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
 
 <script>
   document.addEventListener("DOMContentLoaded", function () {

@@ -1,9 +1,9 @@
 <% content_for :title, "New group" %>
 
-<h2 class="text-center mt-5 fw-bold" style="font-family: 'Cinzel Decorative', serif;">Create a New Group</h2>
+<div class="container mt-3 mb-3 p-4 bg-white rounded shadow-sm" style="max-width: 800px; max-height: 800px">
+  <%= link_to "← Back to Your Groups", memberships_path, class: "btn btn-link fw-bold", style: "font-family: 'Cinzel Decorative', serif;" %>
 
-<%= render "form", group: @group %>
+  <h2 class="text-center mt-5 fw-bold" style="font-family: 'Cinzel Decorative', serif;">Create a New Group</h2>
 
-<!--<div>-->
-<%#= link_to "Back to groups", groups_path %>
-<!--</div>-->
+  <%= render "form", group: @group %>
+</div>

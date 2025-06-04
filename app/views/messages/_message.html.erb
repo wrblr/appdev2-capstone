@@ -1,5 +1,5 @@
 <div class="mb-2">
-  <strong><%= message.sender.email.split('@').first.titleize %>:</strong>
+  <strong style="font-family: 'Cinzel Decorative', serif;"><%= message.sender.email.split('@').first.titleize %>:</strong>
   <span><%= message.body %></span>
-  <small class="text-muted ms-2"><%= message.created_at.strftime("%H:%M") %></small>
+  <small class="text-muted ms-2" style="font-family: 'Cinzel Decorative', serif;"><%= message.created_at.strftime("%H:%M") %></small>
 </div>
