@@ -1,41 +1,3 @@
-<!--<nav class="navbar navbar-expand-lg bg-body-tertiary">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="#">Warble</a>-->
-<%#= link_to "Warble", root_path, class: "navbar-brand" %>
-<!--    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Resources
-          </a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Action</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
-          </ul>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link disabled" aria-disabled="true">Disabled</a>
-        </li>
-      </ul>
-      <form class="d-flex" role="search">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
-        <button class="btn btn-outline-success" type="submit">Search</button>
-      </form>
-    </div>
-  </div>
-</nav>-->
-
 <nav class="navbar navbar-light bg-light">
   <div class="container">
     <div class="row w-100">
@@ -48,11 +10,11 @@
         <!-- Middle section with language selector -->
         <div class="d-flex flex-grow-1 mx-4">
           <%= form_with url: user_registration_path, method: :patch, local: true, id: "navbar_language_form", class: "w-100" do |f| %>
-            <%= f.label :preferred_language_id, "Select language", class: "visually-hidden" %>
+            <%= f.label :preferred_language_id, "Select language", class: "visually-hidden", style: "font-family: 'Cinzel Decorative', serif;" %>
             <%= f.select :preferred_language_id,
             Language.all.map { |lang| [lang.name, lang.id] },
             { selected: current_user&.preferred_language_id },
-            { class: "form-select w-100", id: "navbar_preferred_language", onchange: "this.form.submit()" } %>
+            { class: "form-select w-100", id: "navbar_preferred_language", onchange: "this.form.submit()", style: "font-family: 'Cinzel Decorative', serif;" } %>
           <% end %>
 
         </div>
@@ -62,14 +24,14 @@
           <div class="dropdown">
             <a class="d-flex align-items-center text-decoration-none text-secondary dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               <i class="fa-regular fa-user me-1"></i>
-              <span class="d-none d-md-inline">Profile</span>
+              <span class="d-none d-md-inline" style="font-family: 'Cinzel Decorative', serif;">Profile</span>
             </a>
-            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown" style="font-family: 'Cinzel Decorative', serif;">
               <li>
-                <%= link_to "Edit Profile", edit_user_registration_path, class: "dropdown-item" %>
+                <%= link_to "Edit Profile", edit_user_registration_path, class: "dropdown-item", style: "font-family: 'Cinzel Decorative', serif;" %>
               </li>
               <li>
-                <%= link_to "Sign Out", destroy_user_session_path, method: :delete, data: { turbo_confirm: "Are you sure you want to sign out?" }, class: "dropdown-item text-danger" %>
+                <%= link_to "Sign Out", destroy_user_session_path, method: :delete, data: { turbo_confirm: "Are you sure you want to sign out?" }, class: "dropdown-item text-danger", style: "font-family: 'Cinzel Decorative', serif;" %>
               </li>
             </ul>
           </div>
