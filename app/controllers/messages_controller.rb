@@ -94,6 +94,22 @@ class MessagesController < ApplicationController
     )
   end
 
+  def new_private
+    # Step 1: Exclude yourself
+    all_other_users = User.where.not(id: current_user.id)
+
+    # Step 2: Find existing chat partners (from messages where you're sender or recipient)
+    existing_chat_partner_ids = Message
+      .where("sender_id = ? OR recipient_id = ?", current_user.id, current_user.id)
+      .pluck(:sender_id, :recipient_id)
+      .flatten
+      .uniq
+      .reject { |id| id == current_user.id }
+
+    # Step 3: Only users you haven't chatted with yet
+    @users = all_other_users.where.not(id: existing_chat_partner_ids)
+  end
+
   def group_chat
     @group = Group.find(params[:group_id])
     @message = Message.new(sender_id: current_user.id, group_id: @group.id)

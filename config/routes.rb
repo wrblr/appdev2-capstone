@@ -8,16 +8,9 @@ Rails.application.routes.draw do
   root "memberships#index"
 
   # Private user-to-user chat route
+  get "/messages/private/new", to: "messages#new_private", as: :new_private_message
   get "messages/:sender_id/:recipient_id", to: "messages#private_chat", as: :chat_user
   post "messages/:sender_id/:recipient_id", to: "messages#create", as: :chat_user_messages
-
-  # resources :users, only: [] do
-  #   member do
-  #     # Private user-to-user chat route
-  #     get "messages/:sender_id/:recipient_id", to: "messages#private_chat", as: :chat_user
-  #     post "messages/:sender_id/:recipient_id", to: "messages#create", as: :chat_user_messages
-  #   end
-  # end
 
   # Translation, Language, Memberships, and Message routes
   resources :translations
