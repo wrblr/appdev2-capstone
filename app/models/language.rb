@@ -3,6 +3,7 @@
 # Table name: languages
 #
 #  id         :bigint           not null, primary key
+#  iso_code   :string
 #  name       :string
 #  created_at :datetime         not null
 #  updated_at :datetime         not null

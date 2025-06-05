@@ -58,6 +58,17 @@ class MessagesController < ApplicationController
       @recipient = User.find(@message.recipient_id)
     end
 
+    if current_user.preferred_language_id != @recipient.preferred_language_id
+      @source_lang = current_user.preferred_language.iso_code
+      @target_lang = @recipient.preferred_language.iso_code
+      translated_text = TranslationsController.translate_text(
+        original_text: @message.body,
+        source_lang: @source_lang,
+        target_lang: @target_lang,
+      )
+      @message.translated_body = translated_text
+    end
+
     if @message.save
       respond_to do |format|
         format.turbo_stream

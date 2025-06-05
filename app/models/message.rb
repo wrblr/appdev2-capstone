@@ -5,6 +5,7 @@
 #  id                   :bigint           not null, primary key
 #  audio                :string
 #  body                 :text
+#  translated_body      :text
 #  video                :string
 #  created_at           :datetime         not null
 #  updated_at           :datetime         not null

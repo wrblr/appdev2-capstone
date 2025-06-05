@@ -73,6 +73,7 @@ gem "validate_url"
 gem "carrierwave"
 gem "cloudinary"
 gem "kaminari"
+gem 'httparty'
 
 group :development do
   gem "annotaterb"

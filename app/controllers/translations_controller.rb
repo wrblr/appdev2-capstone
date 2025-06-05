@@ -1,5 +1,33 @@
+require "bundler/setup"
+require "httparty"
+require "json"
+require "dotenv/load"
+
 class TranslationsController < ApplicationController
   before_action :set_translation, only: %i[ show edit update destroy ]
+
+  def self.translate_text(original_text:, source_lang:, target_lang:)
+    response = HTTParty.post("https://api.openai.com/v1/chat/completions",
+                             headers: {
+                               "Authorization" => "Bearer #{ENV["TRANSLATION_API_KEY"]}",
+                               "Content-Type" => "application/json",
+                             },
+                             body: {
+                               model: "gpt-4-0613",
+                               messages: [
+                                 {
+                                   role: "system",
+                                   content: "Translate this message from #{source_lang} to #{target_lang}",
+                                 },
+                                 {
+                                   role: "user",
+                                   content: "Translate this message from #{source_lang} to #{target_lang}: #{original_text}",
+                                 },
+                               ],
+                             }.to_json)
+
+    response.parsed_response["choices"].first["message"]["content"]
+  end
 
   # GET /translations or /translations.json
   def index
@@ -58,13 +86,14 @@ class TranslationsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_translation
-      @translation = Translation.find(params.expect(:id))
-    end
 
-    # Only allow a list of trusted parameters through.
-    def translation_params
-      params.expect(translation: [ :body, :message_id, :language_id ])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_translation
+    @translation = Translation.find(params.expect(:id))
+  end
+
+  # Only allow a list of trusted parameters through.
+  def translation_params
+    params.expect(translation: [:body, :message_id, :language_id])
+  end
 end
